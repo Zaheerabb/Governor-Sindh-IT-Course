@@ -6,11 +6,18 @@ Call show_magicians() to see that the list has actually been modified.
 
 let magicianNames:string[] = ["zaheer","abdul","jane"];
 
+function show_magicians(magician:string[]) {
+
+    for (let i = 0; i < magician.length; i++) {
+        console.log(magician[i]);
+    }
+}
 // creating a function that takes string and print that string 
 function make_great(magician:string[]) {
 
     for (let i = 0; i < magician.length; i++) {
-        console.log(`Great ${magician[i]} `);
+        magician[i] = `Great ${magician[i]}`;
     }
 }
 make_great(magicianNames);
+show_magicians(magicianNames);
