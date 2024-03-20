@@ -1,112 +1,110 @@
+// import inquirer from "inquirer";
+
+import chalk from "chalk";
 import inquirer from "inquirer";
 
-// choose calculator type (normal or BMI)
-let chooseCalculator = await inquirer.prompt([
-  {
-    name: "calType",
-    type: "list",
-    choices: ["Normal calculator", "BMI calculator"],
-    message: "Choose calculator type:",
-    validate: (answer) => {
-      if (!answer) {
-        return "please choose calculator";
-      }
-      return true;
-    },
-  },
-]);
-
-// if calculator type is Normal 
-if (chooseCalculator.calType == "Normal calculator") {
-
-    // enter first number
-  let input1 = await inquirer.prompt([
+// if input is null or other than a number then call this function
+function checkValidate(answer: number) {
+  if (!answer) {
+    return "please enter a number";
+  }
+  return true;
+}
+let x;
+do {
+  // choose calculator type (normal or BMI)
+  let chooseCalculator = await inquirer.prompt([
     {
-      name: "num1",
-      type: "number",
-      message: "enter 1st number:",
-      validate: (answer) => {
-        if (!answer) {
-          return "please enter a number";
-        }
-        return true;
-      },
-    },
-
-    // enter second number
-    {
-      name: "num2",
-      type: "number",
-      message: "enter 2nd number:",
-      validate: (answer) => {
-        if (!answer) {
-          return "please enter a number";
-        }
-        return true;
-      },
-    },
-
-    // enter mathmatical operator
-    {
-      name: "operators",
+      name: "calType",
       type: "list",
-      choices: ["+", "-", "*", "/"],
-      message: "choose operator:",
-      validate: (answer) => {
-        if (!answer) {
-          return "please enter an operator";
-        }
-        return true;
-      },
+      choices: ["Normal calculator", "BMI calculator"],
+      message: "Choose calculator type:",
     },
   ]);
 
-  let solved: number = 0;
-  let op: string = " ";
-  
-  if (input1.operators == "+") {
-    solved = input1.num1 + input1.num2;
-    op = "+";
-  } else if (input1.operators == "-") {
-    solved = input1.num1 - input1.num2;
-    op = "-";
-  } else if (input1.operators == "*") {
-    solved = input1.num1 * input1.num2;
-    op = "*";
-  } else {
-    solved = input1.num1 / input1.num2;
-    op = "/";
-  }
-  console.log(`${input1.num1} ${op} ${input1.num2} = ${solved}`);
-
-}
-// If calculator type is BMI
- else {
+  // if calculator type is Normal
+  if (chooseCalculator.calType == "Normal calculator") {
+    // enter first number
     let input1 = await inquirer.prompt([
-        {
-          name: "height",
-          type: "number",
-          message: "enter your height in meters:",
-          validate: (answer) => {
-            if (!answer) {
-              return "please enter your height";
-            }
-            return true;
-          },
-        },
-        {
-          name: "weight",
-          type: "number",
-          message: "enter your weight in kg:",
-          validate: (answer) => {
-            if (!answer) {
-              return "please enter your weight";
-            }
-            return true;
-          },
-        }
-    ])
+      {
+        name: "num1",
+        type: "number",
+        message: chalk.bgCyanBright("enter 1st number:"),
+        validate: checkValidate,
+      },
 
-    console.log(input1.weight/(input1.height * input1.height));
-      
-}
+      // enter second number
+      {
+        name: "num2",
+        type: "number",
+        message: chalk.bgCyanBright("enter 2nd number:"),
+        validate: checkValidate,
+      },
+
+      // enter mathmatical operator
+      {
+        name: "operators",
+        type: "list",
+        choices: ["+", "-", "*", "/"],
+        message: chalk.bgCyanBright("choose operator: "),
+      },
+    ]);
+
+    let solved: number = 0;
+    let op: string = " ";
+
+    switch (input1.operators) {
+      case "+":
+        solved = input1.num1 + input1.num2;
+        op = "+";
+        break;
+      case "-":
+        solved = input1.num1 - input1.num2;
+        op = "-";
+        break;
+      case "*":
+        solved = input1.num1 * input1.num2;
+        op = "*";
+        break;
+      case "/":
+        solved = input1.num1 / input1.num2;
+        op = "/";
+        break;
+
+      default:
+        break;
+    }
+    console.log(
+      `  ${input1.num1} ${op} ${input1.num2} = ${chalk.bold.greenBright(
+        solved
+      )}`
+    );
+  }
+  // If calculator type is BMI
+  else {
+    let input1 = await inquirer.prompt([
+      {
+        name: "height",
+        type: "number",
+        message: chalk.bgBlueBright("enter your height in meters:"),
+        validate: checkValidate,
+      },
+      {
+        name: "weight",
+        type: "number",
+        message: chalk.bgBlueBright("enter your weight in kg:    "),
+        validate: checkValidate,
+      },
+    ]);
+
+    console.log(
+      chalk.bold.greenBright(input1.weight / (input1.height * input1.height))
+    );
+  }
+  x = await inquirer.prompt({
+    name: "y",
+    type: "list",
+    choices: ["continue", "exit"],
+    message: "do you want to continue or exit?",
+  });
+} while (x.y == "continue");
