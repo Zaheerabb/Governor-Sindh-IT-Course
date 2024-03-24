@@ -1,9 +1,10 @@
+"use strict";
 /*
-Question 3: Name Cases: Store a person’s name in a variable, 
+Question 3: Name Cases: Store a person’s name in a variable,
 and then print that person’s name in lowercase, uppercase, and titlecase.
 */
 // storing person name to variable personsName 
-let personsName:string = "zaheer helloh";
+let personsName = "zaheer helloh";
 // let Hupeercased:string = "";
 // function hUpper(Name:string) {   
 //     for (let i = 0; i < Name.length; i++) {
