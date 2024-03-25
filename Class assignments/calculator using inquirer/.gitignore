@@ -1,9 +1,6 @@
-age.js
 node_modules
-<<<<<<< HEAD
-=======
 package-lock.json
 package.json
 tsconfig.json
->>>>>>> 779c5c4 (file added)
+
 
