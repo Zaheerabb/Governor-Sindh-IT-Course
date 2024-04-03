@@ -14,7 +14,7 @@ do {
       name: "wantTo",
       type: "list",
       message: chalk.bgCyan(" What you want to do: "),
-      choices: ["Add todo","check List","exit"]
+      choices: ["Add todo","Update list-todo","delete list-todo","check List","exit"]
     });
     console.log(" ");
     
@@ -24,31 +24,89 @@ do {
     }
     // if he wants to add then run this if statement
     else if (todo.wantTo == "Add todo") {
-      // asking to user to add todo
-      let add_todo = await inquirer.prompt(
-        {
-          name: "add",
-          type: "input",
-          message: chalk.bgCyan("   Add todo:  "),
-        });
-        console.log(" ");
+
+      let add_todo;
+      do {
+        // asking to user to add todo
+         add_todo = await inquirer.prompt(
+          {
+            name: "add",
+            type: "input",
+            message: chalk.bgCyan("   Add todo:  "),
+          });
+          console.log(" ");
+          
+        } while (!add_todo?.add);
         
-        // if he adds multiple todos at a time then split the todos
-        let spil = add_todo.add.split(' ')
-        // if todos are more then 1
-        if (spil.length > 1) {
-          for (let i = 0; i < spil.length; i++) {
-            listt = listt.concat([spil[i]])
+          // if he adds multiple todos at a time then split the todos
+          let spil = add_todo.add.split(' ')
+          // if todos are more then 1
+          if (spil.length > 1) {
+            for (let i = 0; i < spil.length; i++) {
+              listt = listt.concat([spil[i]])
+            }
+          } else{
+            listt.push(add_todo.add)
           }
-        } else{
-          listt.push(add_todo.add)
-        }
+          
     }
     // if user wants to checklist 
-    else {
-      console.log(listt);
+    else if (todo.wantTo == "check List") {
+      for (let i = 0; i < listt.length; i++) {
+        console.log(chalk.greenBright.bold(` -${listt[i]} `));
+      }
       console.log(" ");
-      
+    }
+    // if user wants to update list
+    else if (todo.wantTo == "Update list-todo") {
+      if (listt.length > 0) {
+        let update_todo = await inquirer.prompt(
+          {
+            name: "update",
+            type: "list",
+            message: chalk.bgCyan(" Which todo you want to update: "),
+            choices: listt
+          }
+        );
+        let update_todo2;
+        do {
+          update_todo2 = await inquirer.prompt(
+            {
+              name: "update2",
+              type: "input",
+              message: chalk.bgCyan(" update: "),
+            }
+          );
+        } while (!update_todo2.update2);
+
+        let x = listt.indexOf(update_todo.update)
+        listt[x] = update_todo2.update2;
+        console.log(chalk.bgGreenBright.bold("\t list is succesfully Updated \n"));
+
+      } else {
+        console.log(chalk.bgRed(" your list is empty that's why you can't update it \n")); 
+      }
+    }
+    // if user want o delete todo from list
+    else {
+      if (listt.length > 0) {
+        let delete_todo = await inquirer.prompt(
+          [{
+            name: "delete",
+            type: "list",
+            message: chalk.bgCyan(" Which todo you want to delete: "),
+            choices: listt,
+          }
+        ]);
+
+              let itemIndex = listt.indexOf(delete_todo.delete);
+              let elementsToRemove = 1;
+              let removedElementsArray = listt.splice(itemIndex, elementsToRemove);
+              
+              console.log(chalk.bgGreenBright.bold("\t todo is succesfully deleted \n"));
+      } else {
+        console.log(chalk.bgRed(" your list is empty that's why you can't delete it \n")); 
+      }
     }
 } while (condi);
 
