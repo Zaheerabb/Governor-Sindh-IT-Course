@@ -1,14 +1,19 @@
 #! /usr/bin/env node
-import inquirer from "inquirer";
-import chalk from "chalk";
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const inquirer_1 = __importDefault(require("inquirer"));
+const chalk_1 = __importDefault(require("chalk"));
 let noOFGuess = 0;
 let random = 0;
 let exitAndPlay;
 //Heading
-console.log(chalk.bgGreenBright("\t\t WELCOME TO GUESS-A-NUMBER "));
+console.log(chalk_1.default.bgGreenBright("\t\t WELCOME TO GUESS-A-NUMBER "));
 do {
     // choosing game level's (easy medium hard)
-    let gamelevel = await inquirer.prompt({
+    let gamelevel = await inquirer_1.default.prompt({
         name: "level",
         type: "list",
         message: "choose level",
@@ -26,7 +31,7 @@ do {
         noOFGuess = 4; // if level is hard then number of guesses 4
     }
     // choosing game formats (1-10, 1-50, 1-100)
-    gamelevel = await inquirer.prompt({
+    gamelevel = await inquirer_1.default.prompt({
         name: "level",
         type: "list",
         message: "want to guess between",
@@ -42,31 +47,31 @@ do {
         random = Math.floor(Math.random() * 100 + 1); // if format is 1-100 then random number is between 100 and 1
     }
     // GAME START
-    console.log(chalk.bold.bgBlue(`\n Guess a number between ${chalk.green(gamelevel.level)} \n You have total ${chalk.red(noOFGuess)} guesses to guess a number\n`));
+    console.log(chalk_1.default.bold.bgBlue(`\n Guess a number between ${chalk_1.default.green(gamelevel.level)} \n You have total ${chalk_1.default.red(noOFGuess)} guesses to guess a number\n`));
     do {
-        let guess = await inquirer.prompt({
+        let guess = await inquirer_1.default.prompt({
             name: "numGuess",
             type: "number",
-            message: chalk.bgBlueBright(" Please guess a number: "),
+            message: chalk_1.default.bgBlueBright(" Please guess a number: "),
         });
         if (guess.numGuess == random) {
-            console.log(chalk.bgGreen("\n Congratulations, You guessed a right number \n"));
+            console.log(chalk_1.default.bgGreen("\n Congratulations, You guessed a right number \n"));
             break;
         }
         else if (guess.numGuess < random) {
             noOFGuess--;
-            console.log(` -> You guessed a wrong number\n ${chalk.green("HINT")}: number is greator then ${guess.numGuess} \t ${chalk.bgRed(" ", noOFGuess, " ")}\n`);
+            console.log(` -> You guessed a wrong number\n ${chalk_1.default.green("HINT")}: number is greator then ${guess.numGuess} \t ${chalk_1.default.bgRed(" ", noOFGuess, " ")}\n`);
         }
         else {
             noOFGuess--;
-            console.log(` -> You guessed a wrong number\n ${chalk.green("HINT")}: number is less then ${guess.numGuess} \t\t ${chalk.bgRed(" ", noOFGuess, " ")}\n`);
+            console.log(` -> You guessed a wrong number\n ${chalk_1.default.green("HINT")}: number is less then ${guess.numGuess} \t\t ${chalk_1.default.bgRed(" ", noOFGuess, " ")}\n`);
         }
     } while (noOFGuess != 0);
     if (noOFGuess == 0) {
-        console.log(chalk.bold.bgRedBright(`\n\t GAME OVER `));
-        console.log(chalk.bold.bgRed(`\n\n\t Number was ${random} \n`));
+        console.log(chalk_1.default.bold.bgRedBright(`\n\t GAME OVER `));
+        console.log(chalk_1.default.bold.bgRed(`\n\n\t Number was ${random} \n`));
     }
-    exitAndPlay = await inquirer.prompt({
+    exitAndPlay = await inquirer_1.default.prompt({
         name: "play",
         type: "list",
         message: "want to: ",
