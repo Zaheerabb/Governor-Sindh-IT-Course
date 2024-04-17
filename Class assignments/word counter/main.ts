@@ -25,4 +25,4 @@ do {
     choices: ["Continue","Exit"],
 })
     
-} while (usrInpt2.exit == "Continue");
+} while (usrInpt2.ext != "Exit");

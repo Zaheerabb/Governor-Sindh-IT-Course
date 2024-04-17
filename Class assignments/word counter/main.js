@@ -1,3 +1,4 @@
+#! /usr/bin/env node
 import inquirer from "inquirer";
 import chalk from "chalk";
 console.log(chalk.bgRedBright.bold.italic("\t WELCOME TO SIMPLE WORD COUNTER \n"));
@@ -17,4 +18,4 @@ do {
         message: chalk.bgCyanBright(" want to continue or exit \n"),
         choices: ["Continue", "Exit"],
     });
-} while (usrInpt2.exit == "Continue");
+} while (usrInpt2.ext != "Exit");
